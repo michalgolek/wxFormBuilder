@@ -25,6 +25,9 @@ Written by
 
   <objectinfo class="sizer" icon="sizer.xpm" type="interface">
     <property name="minimum_size" type="wxSize" help="Give the sizer a minimal size. Normally, the sizer will calculate its minimal size based purely on how much space its children need. After setting the minimal size, 'GetMinSize' will return either the minimal size as requested by its children or the minimal size set here, depending on which is bigger."/>
+	
+	<property name="ifdef_id" type="wxString" help="jesli identyfikator jest zdefiniowany to obiekt jest uzywany"/>
+  	<property name="ifndef_id" type="wxString" help="jesli identyfikator nie jest zdefiniowany to obiekt jest uzywany"/>
   </objectinfo>
 
   <objectinfo class="sizeritembase" smallIcon="sizer.xpm" type="interface">

@@ -93,6 +93,9 @@
   </objectinfo>
 
   <objectinfo class="wxWindow" smallIcon="wxwindow.png" type="interface">
+  	<property name="ifdef_id" type="wxString" help="jesli identyfikator jest zdefiniowany to obiekt jest uzywany"/>
+  	<property name="ifndef_id" type="wxString" help="jesli identyfikator nie jest zdefiniowany to obiekt jest uzywany"/>
+	
     <property name="id" type="macro">wxID_ANY</property>
     <property name="pos" type="wxPoint" help="Window position. The default is (-1, -1) which indicates that wxWidgets should generate a default position for the window."/>
     <property name="size" type="wxSize" help="Window size. The default is (-1, -1) which indicates that wxWidgets should generate a default size for the window."/>
@@ -160,6 +163,8 @@
       <event name="OnRightDClick" class="wxMouseEvent" help="Process a wxEVT_RIGHT_DCLICK event."/>
       <event name="OnRightDown" class="wxMouseEvent" help="Process a wxEVT_RIGHT_DOWN event."/>
       <event name="OnRightUp" class="wxMouseEvent" help="Process a wxEVT_RIGHT_UP event."/>
+	  <event name="OnCaptureLost" class="wxMouseCaptureLostEvent" help="Process a wxEVT_MOUSE_CAPTURE_LOST event." />
+	  
       <event name="OnAux1DClick" class="wxMouseEvent" help="Process a wxEVT_AUX1_DCLICK event."/>
       <event name="OnAux1Down" class="wxMouseEvent" help="Process a wxEVT_AUX1_DOWN event."/>
       <event name="OnAux1Up" class="wxMouseEvent" help="Process a wxEVT_AUX1_UP event."/>

@@ -487,7 +487,9 @@ void ObjectDatabase::SetDefaultLayoutProperties(PObjectBase sizeritem)
 				obj_type == wxT("auinotebook")		||
 				obj_type == wxT("treelistctrl")		||
 				obj_type == wxT("expanded_widget")	||
-				obj_type == wxT("container")
+				obj_type == wxT("container") ||
+				obj_type == wxT("g3rollmenu") ||
+				obj_type == wxT("g3collpanels")
 				)
 	{
 		if ( proportion )
@@ -921,7 +923,14 @@ bool ObjectDatabase::HasCppProperties(wxString type)
 			type == wxT("propgriditem")          ||
 			type == wxT("propgridpage")          ||
 			type == wxT("gbsizer")          ||
-            type == wxT("wizardpagesimple")
+            type == wxT("wizardpagesimple") ||
+
+			type == wxT("nonvisual") ||
+			type == wxT("g3rollmenu") ||
+			type == wxT("g3rollgroup") ||
+			type == wxT("g3rollpanel") ||
+			type == wxT("g3rollbutton") ||
+			type == wxT("g3collpanels")
 			);
 }
 
@@ -1396,7 +1405,14 @@ bool ObjectDatabase::ShowInPalette(wxString type)
 			type == wxT("treelistctrlcolumn")	||
 			type == wxT("toolbar")				||
 			type == wxT("nonvisual")			||
-			type == wxT("splitter")
+			type == wxT("splitter") ||
+			
+			type == wxT("nonvisual") ||
+			type == wxT("g3rollmenu") ||
+			type == wxT("g3rollgroup") ||
+			type == wxT("g3rollpanel") ||
+			type == wxT("g3rollbutton") ||
+			type == wxT("g3collpanels")
 			);
 }
 

@@ -408,6 +408,8 @@ wxString CppCodeGenerator::ConvertEmbeddedBitmapName( const wxString& text )
 
 	name.Replace( wxT("."), wxT("_") );
 
+	name.Replace(wxT("-"), wxT("_"));
+
 	return name;
 }
 
@@ -777,8 +779,22 @@ bool CppCodeGenerator::GenerateCode( PObjectBase project )
 
 	for ( unsigned int i = 0; i < project->GetChildCount(); i++ )
 	{
-		PObjectBase child = project->GetChild( i );
+		PObjectBase child = project->GetChild(i);
 
+		PProperty propNameIfDef = child->GetProperty(wxT("ifdef_id"));
+		PProperty propNameIfNDef = child->GetProperty(wxT("ifndef_id"));
+		if (propNameIfDef)
+		{
+			if (propNameIfDef->GetValue().Length()>0)
+				m_source->WriteLn("#ifdef " + propNameIfDef->GetValue());
+		}
+
+		if (propNameIfNDef)
+		{
+			if (propNameIfNDef->GetValue().Length()>0)
+				m_source->WriteLn("#ifndef " + propNameIfNDef->GetValue());
+		}
+		
 		// Preprocess to find arrays
 		ArrayItems arrays;
 		FindArrayObjects(child, arrays, true);
@@ -792,6 +808,22 @@ bool CppCodeGenerator::GenerateCode( PObjectBase project )
 		}
 		GenConstructor(child, events, arrays);
 		GenDestructor( child, events );
+
+		{
+			PProperty propNameIfDef = child->GetProperty(wxT("ifdef_id"));
+			if (propNameIfDef)
+			{
+				if (propNameIfDef->GetValue().Length()>0)
+					m_source->WriteLn("#endif // " + propNameIfDef->GetValue());
+			}
+
+			PProperty propNameIfNDef = child->GetProperty(wxT("ifndef_id"));
+			if (propNameIfNDef)
+			{
+				if (propNameIfNDef->GetValue().Length()>0)
+					m_source->WriteLn("#endif // " + propNameIfNDef->GetValue());
+			}
+		}
 	}
 
 	// namespace
@@ -904,7 +936,72 @@ bool CppCodeGenerator::GenEventEntry( PObjectBase obj, PObjectInfo obj_info, con
 		{
 			_template.Replace( wxT( "#handler" ), handlerName.c_str() ); // Ugly patch!
 			CppTemplateParser parser( obj, _template, m_i18n, m_useRelativePath, m_basePath );
+
+			wxString strCode = parser.ParseTemplate();
+			PObjectBase parent = obj;
+			PObjectBase parentOK = parent;
+			if (strCode.Length()>0)
+			{
+				// IFDEFY DLA DZIECI KTORYCH KONTROLKA RODZIC POSIADALA WLASCIWOSC ifdef_id
+				// jesli istnieje kontrolka rodzica to sprawdzamy rodzica w dol hierarchii
+				// jesli znaleziono w rodzicu  wlasciwosc ifdef_id lub ifndef_id
+				// to zatrzymujemy sprawdzanie dalszych rodzicow i dodajemy wpis do kodu %ifNdef
+
+				while (parent)
+				{
+					PProperty propNameIfDef = parent->GetProperty(wxT("ifdef_id"));
+					PProperty propNameIfNDef = parent->GetProperty(wxT("ifndef_id"));
+
+					if (propNameIfDef)
+					{
+						if (propNameIfDef->GetValue().Length()>0)
+							m_source->WriteLn("#ifdef " + propNameIfDef->GetValue());
+					}
+
+
+					if (propNameIfNDef)
+					{
+						if (propNameIfNDef->GetValue().Length()>0)
+							m_source->WriteLn("#ifndef " + propNameIfNDef->GetValue());
+					}
+
+					parentOK = parent;
+
+					if (propNameIfDef)
+					{
+						if (propNameIfDef->GetValue().Length()>0)
+							break;
+					}
+					if (propNameIfNDef)
+					{
+						if (propNameIfNDef->GetValue().Length()>0)
+							break;
+					}
+
+					parent = parentOK->GetParent();
+				}
+			}
+
 			m_source->WriteLn( parser.ParseTemplate() );
+
+			if (parentOK && strCode.Length()>0)
+			{
+				PProperty propNameIfDef = parentOK->GetProperty(wxT("ifdef_id"));
+
+				if (propNameIfDef)
+				{
+					if (propNameIfDef->GetValue().Length()>0)
+						m_source->WriteLn("#endif // " + propNameIfDef->GetValue());
+				}
+
+				PProperty propNameIfNDef = parentOK->GetProperty(wxT("ifndef_id"));
+
+				if (propNameIfNDef)
+				{
+					if (propNameIfNDef->GetValue().Length()>0)
+						m_source->WriteLn("#endif // " + propNameIfNDef->GetValue());
+				}
+			}
 			return true;
 		}
 	}
@@ -969,7 +1066,34 @@ void CppCodeGenerator::GenVirtualEventHandlers( const EventVector& events, const
 
 			if ( generatedHandlers.find( aux ) == generatedHandlers.end() )
 			{
+				PProperty propNameIfDef = event->GetObject()->GetProperty(wxT("ifdef_id"));
+				PProperty propNameIfNDef = event->GetObject()->GetProperty(wxT("ifndef_id"));
+				if (propNameIfDef)
+				{
+					if (propNameIfDef->GetValue().Length()>0)
+						m_header->WriteLn("#ifdef " + propNameIfDef->GetValue());
+				}
+
+				if (propNameIfNDef)
+				{
+					if (propNameIfNDef->GetValue().Length()>0)
+						m_header->WriteLn("#ifndef " + propNameIfNDef->GetValue());
+				}
+
 				m_header->WriteLn( aux );
+
+				if (propNameIfDef)
+				{
+					if (propNameIfDef->GetValue().Length()>0)
+						m_header->WriteLn("#endif // " + propNameIfDef->GetValue());
+				}
+
+				if (propNameIfNDef)
+				{
+					if (propNameIfNDef->GetValue().Length()>0)
+						m_header->WriteLn("#endif // " + propNameIfNDef->GetValue());
+				}
+
 				generatedHandlers.insert( aux );
 			}
 		}
@@ -989,8 +1113,36 @@ void CppCodeGenerator::GenAttributeDeclaration(PObjectBase obj, Permission perm,
 				( perm == P_PRIVATE && perm_str == wxT( "private" ) ) )
 		{
 			const auto& code = GetDeclaration(obj, arrays, perm != P_PRIVATE && m_useArrayEnum);
-			if ( !code.empty() )
-				m_header->WriteLn( code );
+			if (!code.empty())
+			{
+				PProperty propNameIfDef = obj->GetProperty(wxT("ifdef_id"));
+				PProperty propNameIfNDef = obj->GetProperty(wxT("ifndef_id"));
+				if (propNameIfDef)
+				{
+					if (propNameIfDef->GetValue().Length() > 0)
+						m_header->WriteLn("#ifdef " + propNameIfDef->GetValue());
+				}
+
+				if (propNameIfNDef)
+				{
+					if (propNameIfNDef->GetValue().Length() > 0)
+						m_header->WriteLn("#ifndef " + propNameIfNDef->GetValue());
+				}
+
+				m_header->WriteLn(code);
+
+				if (propNameIfDef)
+				{
+					if (propNameIfDef->GetValue().Length()>0)
+						m_header->WriteLn("#endif // " + propNameIfDef->GetValue());
+				}
+
+				if (propNameIfNDef)
+				{
+					if (propNameIfNDef->GetValue().Length()>0)
+						m_header->WriteLn("#endif // " + propNameIfNDef->GetValue());
+				}
+			}
 		}
 	}
 
@@ -1200,6 +1352,20 @@ void CppCodeGenerator::GenClassDeclaration(PObjectBase class_obj, bool use_enum,
 	m_header->WriteLn( wxT( "/// Class " ) + class_name );
 	m_header->WriteLn( wxT( "///////////////////////////////////////////////////////////////////////////////" ) );
 
+	PProperty propNameIfDef = class_obj->GetProperty(wxT("ifdef_id"));
+	PProperty propNameIfNDef = class_obj->GetProperty(wxT("ifndef_id"));
+	if (propNameIfDef)
+	{
+		if (propNameIfDef->GetValue().Length()>0)
+			m_header->WriteLn("#ifdef " + propNameIfDef->GetValue());
+	}
+
+	if (propNameIfNDef)
+	{
+		if (propNameIfNDef->GetValue().Length()>0)
+			m_header->WriteLn("#ifndef " + propNameIfNDef->GetValue());
+	}
+
 	m_header->WriteLn( wxT( "class " ) + classDecoration + class_name + wxT( " : " ) + GetCode( class_obj, wxT( "base" ) ) );
 	m_header->WriteLn( wxT( "{" ) );
 	m_header->Indent();
@@ -1285,6 +1451,22 @@ void CppCodeGenerator::GenClassDeclaration(PObjectBase class_obj, bool use_enum,
 	m_header->Unindent();
 	m_header->WriteLn( wxT( "};" ) );
 	m_header->WriteLn(wxEmptyString);
+
+	{
+		PProperty propNameIfDef = class_obj->GetProperty(wxT("ifdef_id"));
+		if (propNameIfDef)
+		{
+			if (propNameIfDef->GetValue().Length()>0)
+				m_header->WriteLn("#endif // " + propNameIfDef->GetValue());
+		}
+
+		PProperty propNameIfNDef = class_obj->GetProperty(wxT("ifndef_id"));
+		if (propNameIfNDef)
+		{
+			if (propNameIfNDef->GetValue().Length()>0)
+				m_header->WriteLn("#endif // " + propNameIfNDef->GetValue());
+		}
+	}
 }
 
 void CppCodeGenerator::GenEnumIds( PObjectBase class_obj )
@@ -1655,20 +1837,87 @@ void CppCodeGenerator::GenConstruction(PObjectBase obj, bool is_widget, ArrayIte
 
 	if ( ObjectDatabase::HasCppProperties( type ) )
 	{
+		PProperty propNameIfDef;
+		PProperty propNameIfNDef;
+		wxString strCode = wxEmptyString;
+
 		// Checking if it has not been declared as class attribute
 		// so that, we will declare it inside the constructor
 
 		wxString perm_str = obj->GetProperty( wxT( "permission" ) )->GetValue();
 		if ( perm_str == wxT( "none" ) )
 		{
+			// DEKLARACJA LOKALNEGO OBIEKTU W KODZIE KONSTRUKTORA !
+			propNameIfDef = obj->GetProperty(wxT("ifdef_id"));
+			if (propNameIfDef)
+			{
+				if (propNameIfDef->GetValue().Length()>0)
+					m_source->WriteLn("#ifdef " + propNameIfDef->GetValue());
+			}
+
+			propNameIfNDef = obj->GetProperty(wxT("ifndef_id"));
+			if (propNameIfNDef)
+			{
+				if (propNameIfNDef->GetValue().Length()>0)
+					m_source->WriteLn("#ifndef " + propNameIfNDef->GetValue());
+			}
+
 			const auto& decl = GetDeclaration(obj, arrays, false);
 			if ( !decl.empty() )
 			{
 				m_source->WriteLn( decl );
 			}
+
+			// DEKLARACJA LOKALNEGO OBIEKTU W KODZIE KONSTRUKTORA !
+			PProperty propNameIfDef = obj->GetProperty(wxT("ifdef_id"));
+			if (propNameIfDef)
+			{
+				if (propNameIfDef->GetValue().Length()>0)
+					m_source->WriteLn("#endif");
+			}
+
+			PProperty propNameIfNDef = obj->GetProperty(wxT("ifndef_id"));
+			if (propNameIfNDef)
+			{
+				if (propNameIfNDef->GetValue().Length()>0)
+					m_source->WriteLn("#endif");
+			}
 		}
 
-		m_source->WriteLn( GetCode( obj, wxT( "construction" ) ) );
+		if (type == wxT("container"))
+		{
+			if (obj->GetParent())
+			{
+				//wxMessageBox(obj->GetParent()->GetClassName());
+				if (obj->GetParent()->GetClassName() == wxT("g3collpage") || obj->GetParent()->GetClassName() == wxT("G3RollMenuPanel"))
+				{
+					m_source->WriteLn(GetCode(obj, wxT("construction")));
+					goto skipcodegen;
+				}
+			}
+
+		}
+
+		strCode = GetCode(obj, wxT("construction"));
+		if (strCode.Length()>0)
+		{
+			propNameIfDef = obj->GetProperty(wxT("ifdef_id"));
+			if (propNameIfDef)
+			{
+				if (propNameIfDef->GetValue().Length()>0)
+					m_source->WriteLn("#ifdef " + propNameIfDef->GetValue());
+			}
+
+			propNameIfNDef = obj->GetProperty(wxT("ifndef_id"));
+			if (propNameIfNDef)
+			{
+				if (propNameIfNDef->GetValue().Length()>0)
+					m_source->WriteLn("#ifndef " + propNameIfNDef->GetValue());
+			}
+		}
+
+		m_source->WriteLn(strCode);
+	skipcodegen:
 
 		GenSettings( obj->GetObjectInfo(), obj );
 
@@ -1708,6 +1957,21 @@ void CppCodeGenerator::GenConstruction(PObjectBase obj, bool is_widget, ArrayIte
 
 				CppTemplateParser parser( obj, _template, m_i18n, m_useRelativePath, m_basePath );
 				m_source->WriteLn( parser.ParseTemplate() );
+
+				// DLA SIZEROW
+				PProperty propNameIfDef = obj->GetProperty(wxT("ifdef_id"));
+				if (propNameIfDef)
+				{
+					if (propNameIfDef->GetValue().Length()>0)
+						m_source->WriteLn("#endif");
+				}
+
+				PProperty propNameIfNDef = obj->GetProperty(wxT("ifndef_id"));
+				if (propNameIfNDef)
+				{
+					if (propNameIfNDef->GetValue().Length()>0)
+						m_source->WriteLn("#endif");
+				}
 			}
 		}
 		else if ( type == wxT( "splitter" ) )
@@ -1802,6 +2066,20 @@ void CppCodeGenerator::GenConstruction(PObjectBase obj, bool is_widget, ArrayIte
 		}
 
 		m_source->WriteLn( GetCode( obj, temp_name ) );
+
+		PProperty propNameIfDef = obj->GetChild(0)->GetProperty(wxT("ifdef_id"));
+		if (propNameIfDef)
+		{
+			if (propNameIfDef->GetValue().Length()>0)
+				m_source->WriteLn("#endif");
+		}
+
+		PProperty propNameIfNDef = obj->GetChild(0)->GetProperty(wxT("ifndef_id"));
+		if (propNameIfNDef)
+		{
+			if (propNameIfNDef->GetValue().Length()>0)
+				m_source->WriteLn("#endif");
+		}
 	}
 	else if ( type == wxT( "notebookpage" )		||
 			  type == wxT( "flatnotebookpage" )	||
@@ -1845,6 +2123,12 @@ void CppCodeGenerator::GenConstruction(PObjectBase obj, bool is_widget, ArrayIte
 			}
 		}
 		m_source->WriteLn( GetCode( obj, wxT( "construction" ) ) );
+	}
+	else if (type == wxT("g3collpage"))
+	{
+		GenConstruction(obj->GetChild(0), false, arrays);
+		m_source->WriteLn(GetCode(obj, wxT("page_add")));
+		GenSettings(obj->GetObjectInfo(), obj);
 	}
 	else
 	{

@@ -27,6 +27,7 @@ Written by
     <inherits class="wxWindow"/>
     <inherits class="AUI"/>
     <property name="name" type="text">m_htmlWin</property>
+	<property name="htmlFile" type="file" help="Tylko do podgladu w wxFormBuilder" />
     <property name="style" type="bitlist">
       <option name="wxHW_SCROLLBAR_NEVER" help="Never display scrollbars, not even when the page is larger than the window."/>
       <option name="wxHW_SCROLLBAR_AUTO" help="Display scrollbars only if page's size exceeds window's size."/>

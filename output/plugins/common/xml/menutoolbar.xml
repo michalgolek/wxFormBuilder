@@ -36,6 +36,8 @@ Written by
       <option name="wxSTB_DEFAULT_STYLE" help="The default style: includes wxSTB_SIZEGRIP|wxSTB_SHOW_TIPS|wxSTB_ELLIPSIZE_END|wxFULL_REPAINT_ON_RESIZE"/>
       wxSTB_SIZEGRIP
     </property>
+	
+    <property name="settings" type="text" help="Code to generate for the settings of this control."/>	
   </objectinfo>
 
   <objectinfo class="wxMenuBar" icon="menubar.xpm" type="menubar" startgroup="1">
@@ -150,6 +152,7 @@ Written by
     <property name="tooltip" type="wxString_i18n" help="Help string used in the tooltip."/>
     <property name="statusbar" type="wxString_i18n" help="This string is shown in the statusbar (if any) of the parent frame when the mouse pointer is inside the tool."/>
     <property name="id" type="macro">wxID_ANY</property>
+	<property name="enabled" type="bool">1</property>
     <event name="OnToolClicked" class="wxCommandEvent" help="Process a wxEVT_COMMAND_TOOL_CLICKED event (a synonym for wxEVT_COMMAND_MENU_SELECTED). Pass the id of the tool."/>
     <event name="OnMenuSelection" class="wxCommandEvent" help="The same as OnToolClicked. (EVT_TOOL)"/>
     <event name="OnToolRClicked" class="wxCommandEvent" help="Process a wxEVT_COMMAND_TOOL_RCLICKED event."/>

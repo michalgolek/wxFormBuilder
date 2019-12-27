@@ -329,6 +329,9 @@ PObjectBase TemplateParser::GetWxParent()
 	candidates.push_back( m_obj->FindNearAncestor( wxT("wizardpagesimple") ) );
 	candidates.push_back( m_obj->FindNearAncestorByBaseClass( wxT("wxStaticBoxSizer") ) );
 
+	candidates.push_back(m_obj->FindNearAncestor(wxT("g3collpanels"))); 
+	candidates.push_back(m_obj->FindNearAncestor(wxT("g3rollmenu")));
+
 	for ( size_t i = 0; i < candidates.size(); i++ )
 	{
 		if ( !wxparent )

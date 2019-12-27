@@ -30,6 +30,9 @@ Written by
     </inherits>
     <inherits class="AUI"/>
     <property name="name" type="text">m_panel</property>
+	
+	<!--ziper- DLA G3ROLLMENU-->
+	<property name="label" type="wxString_i18n">Button</property>	
   </objectinfo>
 
   <objectinfo class="wxCollapsiblePane" icon="collpane.xpm" type="container">

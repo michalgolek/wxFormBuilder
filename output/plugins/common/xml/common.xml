@@ -40,6 +40,21 @@ Written by
     </property>
     <property name="default" type="bool">0</property>
     <property name="auth_needed" type="bool" help="Sets whether an authentication needed symbol should be displayed on the button. This method doesn't do anything if the platform is not Windows Vista or newer.">0</property>
+	
+	<property name="bitmap" type="bitmap" help="This is the bitmap shown in the default state, it must be always valid while all the other bitmaps are optional and don't have to be set."/>
+		<property name="disabled" type="bitmap" help="Bitmap shown when the button is disabled."/>
+		<property name="selected" type="bitmap" help="Bitmap shown when the button is pushed (e.g. while the user keeps the mouse button pressed on it)."/>
+		<property name="focus" type="bitmap" help="Bitmap shown when the button has keyboard focus but is not pressed."/>
+	<property name="hover" type="bitmap" help="Bitmap shown when the mouse is over the button (but it is not pressed). Notice that if hover bitmap is not specified but the current platform UI uses hover images for the buttons (such as Windows XP or GTK+), then the focus bitmap is used for hover state as well. This makes it possible to set focus bitmap only to get reasonably good behaviour on all platforms."/>
+	<property name="bitmapPosition" type="option">      
+		<option name="wxLEFT" 					help="Enable the left border"	/>
+		<option name="wxRIGHT" 					help="Enable the right border"/>
+		<option name="wxTOP" 						help="Enable the top border"/>
+		<option name="wxBOTTOM" 				help="Enable the bottom border"/>
+		wxTOP
+	</property>
+	<property name="bitmapMargins" type="wxSize" help="Item single image size">70,70</property>
+	
     <event name="OnButtonClick" class="wxCommandEvent" help="Process a wxEVT_COMMAND_BUTTON_CLICKED event, when the button is clicked"/>
   </objectinfo>
 

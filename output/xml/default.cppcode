@@ -152,6 +152,9 @@
 			$name->Connect( wxEVT_ENTER_WINDOW, #handler, NULL, this ); #nl
 			$name->Connect( wxEVT_MOUSEWHEEL, #handler, NULL, this );
 		</template>
+		
+		<template name="evt_entry_OnCaptureLost">@#error wxMouseEvent does not propogate, so wxEVT_MOUSE_CAPTURE_LOST from $name can only be handled with Connect()</template>
+		<template name="evt_connect_OnCaptureLost">$name->Connect( wxEVT_MOUSE_CAPTURE_LOST, #handler, NULL, this );</template>
 
 		<!-- wxFocusEvent -->
 		<template name="evt_entry_OnKillFocus">@#error wxFocusEvent does not propogate, so wxEVT_SET_FOCUS from $name can only be handled with Connect()</template>
