@@ -5,10 +5,10 @@ CLS
 
 REM Set Defaults
 SET shared=
-SET monolithic=
-SET wxroot=%WXWIN%
-SET wxver=3.0
-SET compiler=gcc
+SET monolithic=--disable-monolithic
+SET wxroot=%WXWIN313%
+SET wxver=3.1
+SET compiler=vc
 SET compilerversion=
 SET architecture=
 SET usewxconfig=
@@ -125,6 +125,9 @@ build\premake\5.0\bin\release\premake5.exe --file=build/premake/solution.lua --w
 ECHO.
 
 build\premake\5.0\bin\release\premake5.exe --file=build/premake/solution.lua --wx-root=%wxroot% --wx-version=%wxver% --compiler=%compiler% %compilerversion% %architecture% %shared% %monolithic% %mediactrl% %usewxconfig% gmake2
+ECHO.
+
+build\premake\5.0\bin\release\premake5.exe --file=build/premake/solution.lua --wx-root=%wxroot% --wx-version=%wxver% --compiler=%compiler% %compilerversion% %architecture% %shared% %monolithic% %mediactrl% %usewxconfig% vs2015
 ECHO.
 
 build\premake\5.0\bin\release\premake5.exe --file=build/premake/solution.lua --wx-root=%wxroot% --wx-version=%wxver% --compiler=%compiler% %compilerversion% %architecture% %shared% %monolithic% %mediactrl% %usewxconfig% vs2017
