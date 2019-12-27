@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<codegen language="C++">
+  <templates class="G3ImageBrowser">
+    <template name="declaration">#class* $name;</template>
+    <template name="construction">
+      $name = new #class( #wxparent $name, $id, $pos, $size, $style #ifnotnull $window_style @{ |$window_style @} );#nl
+      $name->SetViewMode( $viewMode);#nl
+      $name->SetImageSize( $imageSize );#nl
+      $name->SetItemSpace( $itemSpace );#nl
+      $name->SetLabelFont( $labelFont );#nl
+      $name->SetLabelColour( $labelColour );#nl
+      $name->SetSelectedLabelColour( $selectedLabelColour );#nl
+      $name->SetLabelGradientColour1( $labelBgColor1 );#nl
+      $name->SetLabelGradientColour2( $labelBgColor2 );#nl
+      #ifequal $style "G3_IB_GRADIENTBACKGROUND"
+      @{
+      $name->SetBgGradientColour1( $bgColor1 );#nl
+      $name->SetBgGradientColour2( $bgColor2 );#nl
+      @}
+      #ifequal $style "G3_IB_SELECTED_RENDER_IN_FRAME"
+      @{
+      $name->SetSelectedFrameColour( $selFrameColor );#nl
+      $name->SetSelectedFrameWidth( $selFrameWidth );#nl
+      @}
+      $name->SetSelectedLabelBgColour( $selectedLabelBackgroundColor );#nl
+    </template>
+    <template name="include">@#include &lt;G3wxControls.h&gt;</template>
+    
+    <template name="evt_connect_OnItemSelected">$name->Connect( G3_EVT_IMAGEBROWSER_ITEM_SELECTED, #handler, NULL, this);</template>
+    <template name="evt_connect_OnItemBeginDragged">$name->Connect( G3_EVT_IMAGEBROWSER_ITEM_BEGIN_DRAGGED, #handler, NULL, this);</template>
+    <template name="evt_connect_OnItemEndDragged">$name->Connect( G3_EVT_IMAGEBROWSER_ITEM_END_DRAGGED, #handler, NULL, this);</template>
+    <template name="evt_connect_OnItemRClick">$name->Connect( G3_EVT_IMAGEBROWSER_ITEM_RCLICK, #handler, NULL, this);</template>
+    <template name="evt_connect_OnItemMoreClick">$name->Connect( G3_EVT_IMAGEBROWSER_ITEM_MORE_CLICK, #handler, NULL, this);</template>
+    <template name="evt_connect_OnClickOutside">$name->Connect( G3_EVT_IMAGEBROWSER_CLICK_OUTSIDE, #handler, NULL, this);</template>
+  </templates>
+  
+  <templates class="G3ColorPickerPanel">
+    <template name="declaration">#class* $name;</template>
+    <template name="construction">
+      	$name = new #class( #wxparent $name, $id, $pos, $size );#nl
+      	$name->SetRGBA( $currentColour );#nl       	
+    </template>
+    <template name="include">@#include &lt;G3wxControls.h&gt;</template>
+      
+    <template name="evt_connect_OnChangeValue">$name->Connect( G3_EVT_COLORPICKER_CHANGE_VALUE, #handler, NULL, this);</template>      
+  </templates>
+   
+  <templates class="G3CollapsiblePanels">
+		<template name="declaration">#class* $name;</template>
+		<template name="construction">
+			$name = new #class( #wxparent $name, $id, $pos, $size, $window_style );#nl
+			$name->SetStyle( $styleskin );#nl 
+			$name->SetLabelFont( $labelFont );#nl 
+			$name->SetLabelColour( $labelColour );#nl
+			$name->SetFrameColour( $frameColour );#nl    				
+			$name->SetBgColour1( $bgColor1 );#nl
+			$name->SetBgColour2( $bgColor2 );#nl    	
+			#ifequal $styleskin "G3_CP_GRADIENTBACKGROUND" 
+			@{
+			$name->SetBgGradientColour1( $bgGradientColor1 );#nl
+			$name->SetBgGradientColour2( $bgGradientColor2 );#nl
+			@}	
+		</template>
+		<template name="include">@#include &lt;G3wxControls.h&gt;</template>
+		<template name="finalize">
+			$name->Finalize(); #nl			
+		</template>
+	</templates>
+		
+	<templates class="g3collitem">
+		<template name="construction">$name = new #class( #wxparent $name, $id, $pos, $size, $window_style #ifnotnull $window_name @{, $window_name @} );</template>
+		<template name="page_add">					
+			#parent $name->AddPage( #child $name, $label, $closed );			
+		</template>
+	</templates>
+	
+	<templates class="G3PropertyGrid">
+		<template name="declaration">#class* $name;</template>
+		<template name="construction">$name = new #class(#wxparent $name, $id, $pos, $size, $style #ifnotnull $window_style @{ |$window_style @});</template>
+		<template name="include">@#include &lt;G3wxControls.h&gt;</template>
+		<template name="settings">
+				#ifnotnull $extra_style
+				@{ $name->SetExtraStyle( $extra_style ); @}
+		</template>
+		<template name="evt_connect_OnPropertyGridEventChanged">$name->Connect( G3_EVT_PROPERTYGRID_PROPERTY_CHANGED, #handler, NULL, this);</template>
+		<template name="evt_connect_OnPropertyGridEventButton">$name->Connect( G3_EVT_PROPERTYGRID_PROPERTY_BUTTON, #handler, NULL, this);</template>
+		<template name="evt_connect_OnPropertyGridEventToggle">$name->Connect( G3_EVT_PROPERTYGRID_PROPERTY_TOGGLE, #handler, NULL, this);</template>
+	</templates>
+	
+	<templates class="G3PropertyGridEx">
+		<template name="declaration">#class* $name;</template>
+		<template name="construction">$name = new #class(#wxparent $name, $id, $pos, $size, $style #ifnotnull $window_style @{ |$window_style @});</template>
+		<template name="include">@#include &lt;G3wxControls.h&gt;</template>
+		<template name="settings">
+				#ifnotnull $extra_style
+				@{ $name->GetG3PropertyGrid()->SetExtraStyle( $extra_style ); @}
+		</template>
+		<template name="evt_connect_OnPropertyGridEventChanged">$name->GetG3PropertyGrid()->Connect( G3_EVT_PROPERTYGRID_PROPERTY_CHANGED, #handler, NULL, this);</template>
+		<template name="evt_connect_OnPropertyGridEventButton">$name->GetG3PropertyGrid()->Connect( G3_EVT_PROPERTYGRID_PROPERTY_BUTTON, #handler, NULL, this);</template>
+		<template name="evt_connect_OnPropertyGridEventToggle">$name->GetG3PropertyGrid()->Connect( G3_EVT_PROPERTYGRID_PROPERTY_TOGGLE, #handler, NULL, this);</template>
+	</templates>
+	
+	
+	<templates class="wxInfoBar">
+		<template name="declaration">#class* $name;</template>
+		<template name="construction">$name = new #class(#wxparent $name);</template>
+		<template name="include">@#include &lt;wx/infobar.h&gt;</template>			
+		<!--<template name="settings">$settings</template>-->
+		
+		<template name="settings">
+			$settings #nl
+				$name->SetShowHideEffects( $show_effect, $hide_effect ); #nl
+				$name->SetEffectDuration( $duration );
+		</template>
+		<template name="evt_connect_OnButtonClick">$name->Connect( wxEVT_COMMAND_BUTTON_CLICKED, #handler, NULL, this );</template>
+	</templates>	
+	
+	<templates class="wxBannerWindow">
+		<template name="declaration">#class* $name;</template>
+		<template name="construction">$name = new #class(#wxparent $name, $id, $direction, $pos, $size, $window_style );</template>
+		<template name="include">@#include &lt;wx/bannerwindow.h&gt;</template>						
+
+		<template name="settings">
+		$name->SetText( _("$titleText"), _("$messageText"));#nl
+		$name->SetGradient( $gradientColor1, $gradientColor2 );#nl
+		#ifnotnull $backgroundBitmap
+		@{ $name->SetBitmap( $backgroundBitmap); @}			
+		</template>
+	</templates>	
+	
+		<templates class="awxLed">
+			<template name="declaration">#class* $name;</template>
+			<template name="construction">
+				$name = new #class( #wxparent $name, $id, $pos, $size, $color, $window_style );
+			    #ifnotnull $state
+				  @{ #nl $name->SetState( $state ); @}
+			</template>
+			<template name="include">@#include &lt;G3wxControls.h&gt;</template>
+	</templates>
+	
+	
+	
+	<templates class="G3RollMenu">
+		<template name="declaration">#class* $name;</template>
+		<template name="construction">
+			$name = new #class( #wxparent $name, $id, $pos, $size, $window_style );#nl			
+			$name->SetLabelItemColour( $labelItemColour );#nl			
+			$name->SetLabelSelectedItemColour( $labelSelectedItemColour );#nl			
+			$name->SetLabelSelectedItemBackgroundColour( $selectedItemBackgroundColor );#nl			
+			$name->SetBackgroundColour( $backgroundColor );#nl			
+		</template>
+		<template name="include">@#include &lt;G3wxControls.h&gt;</template>
+		<template name="finalize">
+			$name->Finalize(); #nl			
+		</template>
+		
+		<template name="evt_connect_OnItemSelected">$name->Connect( G3_EVT_ROLLMENU_ITEM_SELECTED, #handler, NULL, this);</template>
+	</templates>
+
+	<templates class="G3RollMenuPanel">
+		<template name="construction">$name = new #class( #wxparent $name, $id, $pos, $size, $window_style #ifnotnull $window_name @{, $window_name @} );#nl
+		#parent $name->AddPanel( #child $name, $label);			
+		</template>					
+			
+	</templates>
+	
+	<templates class="G3RollMenuGroup">
+		<template name="construction">$name = new #class( #wxparent $name, $id, $pos, $size, $window_style #ifnotnull $window_name @{, $window_name @} );#nl
+		#parent $name->AddGroup( #child $name, $label);			
+		</template>
+		
+	</templates>
+	
+	<templates class="G3RollMenuButton">
+		<template name="construction">$name = new #class( #wxparent $name, $id, $pos, $size, $window_style #ifnotnull $window_name @{, $window_name @} );</template>
+		<template name="page_add">					
+			#parent $name->AddButton( #child $name, $label);			
+		</template>
+	</templates>
+	
+	<templates class="G3BitmapButton">
+		<template name="declaration">#class* $name;</template>
+		<template name="construction">
+
+			#ifnotnull $bitmapNormal
+			@{
+				#ifnull $bitmapChecked
+				@{
+				$name = new #class( #wxparent $name, $label, $bitmapNormal, $bitmapHover, $id, $pos, $size, $window_style );#nl
+				@}
+			@}	
+			#ifnotnull $bitmapChecked
+			@{
+				$name = new #class( #wxparent $name, $label, $bitmapNormal, $bitmapHover, $bitmapChecked, $id, $pos, $size, $window_style );#nl
+				$name->SetValue($checked); #nl	
+			@}	
+			
+		</template>
+		<template name="include">@#include &lt;G3wxControls.h&gt;</template>		
+		<template name="evt_connect_OnButtonClick">$name->Connect( wxEVT_COMMAND_BUTTON_CLICKED, #handler, NULL, this );</template>
+	</templates>
+	
+	<templates class="G3BitmapPanel">
+		<template name="declaration">#class* $name;</template>
+		<template name="construction">
+		
+			#ifnotnull $backgroundBitmap			
+			@{
+				$name = new #class( #wxparent $name, $backgroundBitmap, $id, $pos, $size, $window_style );#nl
+			@}	
+			
+			#ifnull $backgroundBitmap			
+			@{
+				$name = new #class( #wxparent $name, $gradientColor1, $gradientColor2, $gradientDirection, $id, $pos, $size, $window_style );#nl
+			@}
+			
+		</template>
+		<template name="include">@#include &lt;G3wxControls.h&gt;</template>		
+	</templates>
+	
+	<templates class="G3GroupBox">
+		<template name="declaration">#class* $name;</template>
+		<template name="construction">$name = new #class( #wxparent $name, $label, $edgeColor, $edgeWidth, $roundBorderSize, $id, $pos, $size, $window_style );</template>
+		<template name="include">@#include &lt;G3wxControls.h&gt;</template>
+	</templates>
+	
+	<templates class="G3CustomFileSelect">
+		<template name="declaration">#class* $name;</template>
+		<template name="construction">
+		  $name = new #class( #wxparent $name, $dialogType, $path, $fileSpecs, $subFolders, $id );#nl
+		  #ifnotnull $selectedFile
+		  @{		 
+		  	$name->SelectFile( $selectedFile);#nl
+		  @}
+		</template>
+		<template name="include">@#include &lt;G3wxControls.h&gt;</template>
+
+		<template name="evt_connect_OnPathChanged">$name->Connect( G3_EVT_FILE_CHANGED, #handler, NULL, this);</template>		
+	</templates>
+  
+	<templates class="G3ScrolledWindowBitmap">
+		<template name="declaration">#class* $name;</template>
+		<template name="construction">
+
+			#ifnotnull $backgroundBitmap			
+			@{
+				$name = new #class( #wxparent $name, $backgroundBitmap, $id, $pos, $size, $window_style );#nl
+			@}	
+
+			#ifnull $backgroundBitmap			
+			@{
+				$name = new #class( #wxparent $name, $gradientColor1, $gradientColor2, $gradientDirection, $id, $pos, $size, $window_style );#nl
+			@}
+
+		</template>
+		<template name="include">@#include &lt;G3wxControls.h&gt;</template>		
+	</templates>
+	
+	<templates class="wxWebView">
+		<template name="declaration">#class* $name;</template>
+		<template name="construction">
+		wxWebView::RegisterFactory($backend, wxSharedPtr&lt;wxWebViewFactory&gt; (new $backendFactory));#nl
+		$name = wxWebView::New(#wxparent $name, $id, "", $pos, $size, $backend, #ifnull $window_style @{ 0 @} #ifnotnull $window_style @{ $window_style @});
+		</template>
+		
+		<template name="include">
+		@#include &lt;wx/webview.h&gt;#nl
+		@#include &lt;wx/msw/webview_ie.h&gt;
+		</template>			
+
+		<template name="settings">
+			#ifnotnull $url
+			@{$name->LoadURL ( $url ); #nl @}
+			$name->SetEditable ( $isEditable );	#nl			
+			$name->EnableContextMenu ( $isEnableContextMenu );
+		</template>
+		<template name="evt_connect_OnWebViewNavigating">$name->Connect( wxEVT_WEBVIEW_NAVIGATING, #handler, NULL, this );</template>
+		<template name="evt_connect_OnWebViewNavigated">$name->Connect( wxEVT_WEBVIEW_NAVIGATED, #handler, NULL, this );</template>
+		<template name="evt_connect_OnWebViewLoaded">$name->Connect( wxEVT_WEBVIEW_LOADED , #handler, NULL, this );</template>
+		<template name="evt_connect_OnWebViewError">$name->Connect( wxEVT_WEBVIEW_ERROR, #handler, NULL, this );</template>
+		<template name="evt_connect_OnWebViewNewWindow">$name->Connect( wxEVT_WEBVIEW_NEWWINDOW , #handler, NULL, this );</template>
+		<template name="evt_connect_OnWebViewTitleChanged">$name->Connect( wxEVT_WEBVIEW_TITLE_CHANGED, #handler, NULL, this );</template>
+	</templates>
+	
+</codegen>

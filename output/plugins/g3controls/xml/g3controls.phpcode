@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<codegen language="PHP">
+
+  <templates class="G3ImageBrowser">
+	<template name="construction">
+    @$this->$name = new #class( #wxparent $name, $id, $pos, $size, $style #ifnotnull $window_style @{ |$window_style @} );</template>
+  </templates>
+  
+  <templates class="G3ColorPickerPanel">
+  	<template name="construction">
+      @$this->$name = new #class( #wxparent $name, $id, $pos, $size, $style #ifnotnull $window_style @{ |$window_style @} );</template>
+  </templates>
+</codegen>

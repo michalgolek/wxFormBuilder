@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<package name="G3Engine" lib="G3Controls" icon="g3logo.xpm" desc="My own controls">
+  <objectinfo class="G3ImageBrowser" icon="imagebrowser.xpm" type="widget">
+    <inherits class="wxPanel" />
+    
+    <property name="name" type="text">m_imgBrowser</property>
+    <property name="imageSize" type="wxSize" help="Item single image size">70,70</property>
+    <property name="itemSpace" type="wxSize" help="Space between items">1,1</property>
+    <property name="style" type="bitlist">      
+      <option name="G3_IB_GRADIENTBACKGROUND" help="Draw gradient background"/>
+      <option name="G3_IB_FILLED_BACKGROUND_LABEL" help="Fill label background"/>
+      <option name="G3_IB_GRADIENT_BG_LABEL" help="Draw label background as gradient"/>
+      <option name="G3_IB_SELECTED_RENDER_IN_FRAME" help="Draw frame around selected item, otherwise draw selected label "/>
+      <!--G3_IB_SELECTED_RENDER_IN_FRAME-->
+    </property>
+    <property name="labelColour" type="wxColour">255,255,255 </property>
+    <property name="selectedLabelColour" type="wxColour">255,255,255 </property>
+    <property name="selectedLabelBackgroundColor" type="wxColour">0,0,128 </property>
+    <property name="labelFont" type="wxFont">Courier 10 Pitch, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, 8</property>
+    <property name="labelBgColor1" type="wxColour">146,146,146 </property>
+    <property name="labelBgColor2" type="wxColour">75,75,75 </property>
+    <property name="bgColor1" type="wxColour">146,146,146 </property>
+    <property name="bgColor2" type="wxColour">75,75,75 </property>
+    <property name="selFrameColor" type="wxColour">0,255,0 </property>
+    <property name="selFrameWidth" type="uint">1</property>
+    
+    <!--<property name="viewMode" type="uint">0</property>-->
+    <property name="viewMode" type="option">      
+      <option name="G3_IBVM_VIEWSINLELIST" 	help="Single List without text"/>
+      <option name="G3_IBVM_VIEWLIST" 	help="List without thumbnails"/>
+      <option name="G3_IBVM_VIEWDETAILS" 	help="Mini thumbnails and detail text"/>
+      <option name="G3_IBVM_VIEWTHUMBNAILS" 	help="Thumbnails view"/>
+      G3_IBVM_VIEWTHUMBNAILS
+    </property>
+    
+    
+    <event name="OnItemSelected" class="G3ImageBrowserEvent" help="Process a EVT_G3_IMAGEBROWSER_ITEM_SELECTED event, when the item is selected" />
+    <event name="OnItemBeginDragged" class="G3ImageBrowserEvent" help="Process a EVT_G3_IMAGEBROWSER_ITEM_BEGIN_DRAGGED event, when the item is selected" />
+    <event name="OnItemEndDragged" class="G3ImageBrowserEvent" help="Process a EVT_G3_IMAGEBROWSER_ITEM_END_DRAGGED event, when the item is selected" />
+    <event name="OnItemRClick" class="G3ImageBrowserEvent" help="Process a EVT_G3_IMAGEBROWSER_ITEM_RCLICK event, when the item is selected" />
+    <event name="OnItemMoreClick" class="G3ImageBrowserEvent" help="Process a EVT_G3_IMAGEBROWSER_ITEM_MORE_CLICK event, when the item is selected" />
+    <event name="OnClickOutside" class="G3ImageBrowserEvent" help="Process a G3_EVT_IMAGEBROWSER_CLICK_OUTSIDE event, item is deselected" />
+  </objectinfo>
+  
+  <objectinfo class="G3ColorPickerPanel" icon="colorpickerpanel.xpm" type="container">
+		<inherits class="wxCommon Events" />
+		<inherits class="wxWindow" />
+
+		<property name="name" type="text">m_colorPickerPanel</property>
+		<property name="currentColour" type="wxColour">255,0,0 </property>
+
+		<event name="OnChangeValue" class="G3ColorPickerPanelEvent" help="Process a EVT_G3_COLORPICKER_CHANGE_VALUE event, when color changed" />	    
+  </objectinfo>
+  
+  <!-- <objectinfo class="G3CollapsiblePanels" icon="collapseiblepane.xpm" type="g3collpanels"> -->
+		<!-- <inherits class="Common Events" /> -->
+		<!-- <inherits class="wxWindow"> -->
+		<!-- <property name="window_style">wxTAB_TRAVERSAL</property> -->
+		<!-- </inherits> -->
+		<!-- <inherits class="AUI" /> -->
+		<!-- <property name="name" type="text">m_collapsiblePanel</property> -->
+		<!-- <property name="styleskin" type="option"> -->
+			<!-- <option name="G3_CP_DEFAULT" help="standard wxtogglebutton"/> -->
+			<!-- <option name="G3_CP_SIMPLE_BACKGROUND" help="toggle button filled one color"/> -->
+			<!-- <option name="G3_CP_GRADIENTBACKGROUND" help="toggle button with gradient background color"/> -->
+			<!-- G3_CP_GRADIENTBACKGROUND -->
+    <!-- </property>      -->
+		<!-- <property name="labelColour" type="wxColour">0,0,0 </property>				 -->
+		<!-- <property name="labelFont" type="wxFont">Courier 10 Pitch, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, 8</property> -->
+		<!-- <property name="frameColour" type="wxColour">0,0,0 </property>		 -->
+		<!-- <property name="bgColor1" type="wxColour">222,222,222 </property> -->
+		<!-- <property name="bgColor2" type="wxColour">190,190,190 </property> -->
+		<!-- <property name="bgGradientColor1" type="wxColour">200,200,200 </property> -->
+    <!-- <property name="bgGradientColor2" type="wxColour">150,150,150 </property>		 -->
+	<!-- </objectinfo> -->
+	
+	<!--class TYLKO mala litera !!! wtf ?-->
+	<!-- <objectinfo class="g3collpage" type="g3collpage" > -->
+		<!-- <property name="label" type="wxString_i18n">a page</property> -->
+		<!-- <property name="closed" type="bool" help="Closed panel ?">0</property> -->
+	<!-- </objectinfo> -->
+
+
+	<objectinfo class="G3PropertyGrid" icon="propgrid.xpm" type="expanded_widget">
+		<inherits class="wxPropertyGrid" />
+		<inherits class="wxAdditions" />
+		<inherits class="wxWindow" />
+		<inherits class="AUI" />
+		<property name="style" type="bitlist">
+			<option name="wxPG_AUTO_SORT" 				help="This will cause Sort() automatically after an item is added.
+																	When inserting a lot of items in this mode, it may make sense to
+																	use Freeze() before operations and Thaw() afterwards to increase
+																	performance." />
+			<option name="wxPG_HIDE_CATEGORIES"			help="Categories are not initially shown (even if added)."/>
+			<option name="wxPG_ALPHABETIC_MODE"			help="This style combines non-categoric mode and automatic sorting."/>
+			<option name="wxPG_BOLD_MODIFIED"			help="Modified values are shown in bold font."/>
+			<option name="wxPG_SPLITTER_AUTO_CENTER"	help="When wxPropertyGrid is resized, splitter moves to the center.
+																This behaviour stops once the user manually moves the splitter."/>
+			<option name="wxPG_TOOLTIPS"				help="Display tooltips for cell text that cannot be shown completely.
+																	If wxUSE_TOOLTIPS is 0, then this doesn't have any effect."/>
+			<option name="wxPG_HIDE_MARGIN"				help="Disables margin and hides all expand/collapse buttons that would appear
+																	outside the margin (for sub-properties). Toggling this style automatically
+																	expands all collapsed items."/>
+			<option name="wxPG_STATIC_SPLITTER" 		help="This style prevents user from moving the splitter."/>
+			<option name="wxPG_STATIC_LAYOUT"			help="Combination of other styles that make it impossible for user to modify the layout."/>
+			<option name="wxPG_LIMITED_EDITING"			help="Disables wxTextCtrl based editors for properties which can be edited in another way."/>
+			<option name="wxPG_DEFAULT_STYLE"			help="Combines various styles."/>
+			<option name="wxTAB_TRAVERSAL"				help="wxTAB_TRAVERSAL allows using Tab/Shift-Tab to travel between properties
+																	in grid. Travelling forwards from last property will navigate to the
+																	next control, and backwards from first will navigate to the previous one."/>
+
+			wxPG_BOLD_MODIFIED|wxPG_SPLITTER_AUTO_CENTER
+		</property>
+		<property name="extra_style" type="bitlist">
+						<option name="wxPG_EX_INIT_NOCAT"			help="Speeds up switching to wxPG_HIDE_CATEGORIES mode. Initially, if wxPG_HIDE_CATEGORIES
+																	is not defined, the non-categorized data storage is not activated, and switching
+																	the mode first time becomes somewhat slower. wxPG_EX_INIT_NOCAT activates the
+																	non-categorized data storage right away. IMPORTANT NOTE: If you do plan not
+																	switching to non-categoric mode, or if you don't plan to use categories at
+																	all, then using this style will result in waste of resources."/>
+		</property>
+		<property name="name" type="text">m_propertyGrid</property>
+		<!--<property name="include_advanced" type="bool" help="Include Advanced Properties">1</property>-->
+		<event name="OnPropertyGridEventChanged" class="G3PropertyGridEvent" help="G3PropertyGrid change property event" />		
+		<event name="OnPropertyGridEventButton" class="G3PropertyGridEvent" help="G3PropertyGrid button click in editor property" />		
+		<event name="OnPropertyGridEventToggle" class="G3PropertyGridEvent" help="G3PropertyGrid button toggle in editor property" />		
+	</objectinfo>
+	
+	<objectinfo class="G3PropertyGridEx" icon="propgridex.xpm" type="expanded_widget">		
+		<inherits class="wxAdditions" />
+		<inherits class="wxWindow" />
+		<inherits class="AUI" />		
+		<property name="style" type="bitlist" />
+		<property name="extra_style" type="bitlist">
+			<option name="wxPG_EX_INIT_NOCAT"			help="Speeds up switching to wxPG_HIDE_CATEGORIES mode. Initially, if wxPG_HIDE_CATEGORIES
+														is not defined, the non-categorized data storage is not activated, and switching
+														the mode first time becomes somewhat slower. wxPG_EX_INIT_NOCAT activates the
+														non-categorized data storage right away. IMPORTANT NOTE: If you do plan not
+														switching to non-categoric mode, or if you don't plan to use categories at
+														all, then using this style will result in waste of resources."/>
+			<option name="wxPG_AUTO_SORT" 				help="This will cause Sort() automatically after an item is added.
+																	When inserting a lot of items in this mode, it may make sense to
+																	use Freeze() before operations and Thaw() afterwards to increase
+																	performance." />
+			<option name="wxPG_HIDE_CATEGORIES"			help="Categories are not initially shown (even if added)."/>
+			<option name="wxPG_ALPHABETIC_MODE"			help="This style combines non-categoric mode and automatic sorting."/>
+			<option name="wxPG_BOLD_MODIFIED"			help="Modified values are shown in bold font."/>
+			<option name="wxPG_SPLITTER_AUTO_CENTER"	help="When wxPropertyGrid is resized, splitter moves to the center.
+																This behaviour stops once the user manually moves the splitter."/>
+			<option name="wxPG_TOOLTIPS"				help="Display tooltips for cell text that cannot be shown completely.
+																	If wxUSE_TOOLTIPS is 0, then this doesn't have any effect."/>
+			<option name="wxPG_HIDE_MARGIN"				help="Disables margin and hides all expand/collapse buttons that would appear
+																	outside the margin (for sub-properties). Toggling this style automatically
+																	expands all collapsed items."/>
+			<option name="wxPG_STATIC_SPLITTER" 		help="This style prevents user from moving the splitter."/>
+			<option name="wxPG_STATIC_LAYOUT"			help="Combination of other styles that make it impossible for user to modify the layout."/>
+			<option name="wxPG_LIMITED_EDITING"			help="Disables wxTextCtrl based editors for properties which can be edited in another way."/>
+			<option name="wxPG_DEFAULT_STYLE"			help="Combines various styles."/>
+			<option name="wxTAB_TRAVERSAL"				help="wxTAB_TRAVERSAL allows using Tab/Shift-Tab to travel between properties
+																	in grid. Travelling forwards from last property will navigate to the
+																	next control, and backwards from first will navigate to the previous one."/>
+
+			wxPG_BOLD_MODIFIED|wxPG_SPLITTER_AUTO_CENTER
+		</property>
+		<property name="name" type="text">m_propertyGridEx</property>		
+		<event name="OnPropertyGridEventChanged" class="G3PropertyGridEvent" help="G3PropertyGrid change property event" />		
+		<event name="OnPropertyGridEventButton" class="G3PropertyGridEvent" help="G3PropertyGrid button click in editor property" />		
+		<event name="OnPropertyGridEventToggle" class="G3PropertyGridEvent" help="G3PropertyGrid button toggle in editor property" />		
+	</objectinfo>
+	
+	
+	<!-- <objectinfo class="G3RollMenu" icon="rollmenu.xpm" type="g3rollmenu"> -->
+	<!-- <!--<objectinfo class="G3RollMenu" icon="rollmenu.xpm" type="g3rollmenu">--> -->
+		<!-- <inherits class="wxPanel" /> -->
+		<!-- <inherits class="wxWindow"> -->
+			<!-- <property name="window_style">wxNO_BORDER</property> -->
+		<!-- </inherits> -->
+		<!-- <inherits class="AUI" /> -->
+		<!-- <property name="name" type="text">m_rollMenu</property>		    -->
+		<!-- <property name="labelItemColour" type="wxColour">255,255,255 </property>				 -->
+		<!-- <property name="labelSelectedItemColour" type="wxColour">0, 160, 255</property> -->
+		<!-- <property name="selectedItemBackgroundColor" type="wxColour">60,60,60 </property>		 -->
+		
+		<!-- <property name="backgroundColor" type="wxColour">46,46,46</property> -->
+				
+		<!-- <property name="menuData" type="wxString_i18n" help="Dane xml\ini reprezentujace budowe menu lacznie z ID" ></property>		 -->
+		
+		<!-- <event name="OnItemSelected" class="G3RollMenuEvent" help="Process a G3_EVT_ROLLMENU_ITEM_SELECTED event, when the item is selected" /> -->
+	<!-- </objectinfo> -->
+		
+	<!-- <objectinfo class="G3RollMenuGroup" icon="rollmenugroup.xpm" type="g3rollgroup" > -->
+	<!-- <inherits class="wxPanel" /> -->
+		<!-- <property name="name" type="text">m_rollMenuGroup</property> -->
+		<!-- <property name="label" type="wxString_i18n">Group</property>		 -->
+		<!-- <property name="closed" type="bool" help="Closed group?">0</property> -->
+	<!-- </objectinfo> -->
+	
+	<!-- <objectinfo class="G3RollMenuPanel" icon="rollmenupanel.xpm" type="container" > <!--g3rollpanel--> -->
+	<!-- <inherits class="Common Events" /> -->
+			<!-- <inherits class="wxWindow"> -->
+				<!-- <property name="window_style">wxTAB_TRAVERSAL</property> -->
+		<!-- </inherits> -->
+		<!-- <property name="name" type="text">m_rollMenuPanel</property> -->
+		<!-- <property name="label" type="wxString_i18n">Panel</property>		 -->
+	<!-- </objectinfo> -->
+		
+	<!-- <objectinfo class="G3RollMenuButton" icon="rollmenubutton.xpm" type="g3rollbutton" > -->
+	<!-- <inherits class="wxPanel" /> -->
+			<!-- <property name="name" type="text">m_rollMenuButton</property> -->
+			<!-- <property name="label" type="wxString_i18n">Button</property>		 -->
+	<!-- </objectinfo> -->
+	
+	<objectinfo class="G3BitmapButton" icon="bitmapButton.xpm" type="widget">
+		<inherits class="wxWindow"/>
+			
+		<inherits class="AUI" />		
+		<property name="name" type="text">m_bitmapButton</property>
+		<property name="bitmapNormal" type="bitmap" help="Normal state background bitmap"/>
+		<property name="bitmapHover" type="bitmap" help="On mouse hover background bitmap"/>
+		<property name="bitmapChecked" type="bitmap" help="On mouse change state background bitmap"/>
+		<property name="label" type="wxString_i18n">G3BitmapPanel</property>		
+		<property name="checked" type="bool">0</property>		
+    <event name="OnButtonClick" class="wxCommandEvent" help="Process a wxEVT_COMMAND_BUTTON_CLICKED event, when the button is clicked" />    
+    <event name="OnToggleButton" class="wxCommandEvent" help="Process a wxEVT_COMMAND_RADIOBUTTON_SELECTED event, when the radiobutton is clicked." />
+	</objectinfo>
+	
+	<objectinfo class="G3BitmapPanel" icon="bitmapPanel.xpm" type="container">
+		<inherits class="Common Events" />
+		<inherits class="wxWindow">
+			<property name="window_style">wxTAB_TRAVERSAL</property>
+		</inherits>
+		<inherits class="AUI" />
+		<property name="name" type="text">m_bitmapPanel</property>
+		<property name="backgroundBitmap" type="bitmap" help="background bitmap"/>
+		<property name="gradientColor1" type="wxColour">178,178,178</property>
+		<property name="gradientColor2" type="wxColour">200,200,200</property>
+		<property name="gradientDirection" type="option">      
+			<option name="wxLEFT" 					help="Enable the left border"	/>
+			<option name="wxRIGHT" 					help="Enable the right border"/>
+			<option name="wxTOP" 						help="Enable the top border"/>
+			<option name="wxBOTTOM" 				help="Enable the bottom border"/>
+			wxTOP
+    </property>
+	</objectinfo>
+  
+  <objectinfo class="G3GroupBox" icon="groupBox.xpm" type="container">
+		<inherits class="Common Events" />
+		<inherits class="wxWindow"/>
+		<inherits class="AUI" />
+		<property name="name" type="text">m_groupBox</property>
+		<property name="label" type="wxString_i18n">G3GroupBox</property>		
+		<property name="edgeColor" type="wxColour">0,0,0</property>
+		<property name="edgeWidth" type="uint">1</property>		
+		<property name="roundBorderSize" type="uint">5</property>						
+	</objectinfo>
+	
+  <objectinfo class="G3CustomFileSelect" icon="customFileSelect.xpm" type="widget">
+  		<inherits class="wxWindow"/>
+  					
+  		<property name="name" type="text">m_customFileSelect</property>  		
+  		<property name="label" type="wxString_i18n">G3CustomFileSelect</property>
+  		<property name="path" type="wxString_i18n"></property>
+  		<property name="selectedFile" type="wxString_i18n"></property>
+  		<property name="fileSpecs" type="wxString_i18n"></property>  		
+  		<property name="subFolders" type="bool">1</property>		
+  	    <property name="dialogType" type="option">      
+		      <option name="G3CUSTOM_FILE_SELECT_DLG_TYPE_IMAGE" 	help="image selection dialog"/>
+		      <option name="G3CUSTOM_FILE_SELECT_DLG_TYPE_SOUND" 	help="sound selection dialog"/>
+		      G3CUSTOM_FILE_SELECT_DLG_TYPE_IMAGE
+    	</property>
+    
+      <event name="OnPathChanged" class="G3CustomFileChangedEvent" help="Process a G3_EVT_FILE_CHANGED event, when the item is selected" />
+	</objectinfo>
+	
+  <objectinfo class="G3ScrolledWindowBitmap" icon="scrollwinbitmap.xpm" type="container">
+		<inherits class="wxWindow">
+			<property name="window_style">wxHSCROLL|wxVSCROLL</property>
+		</inherits>
+		<inherits class="AUI" />
+		<property name="name" type="text">m_scrolledWindow</property>
+		<property name="backgroundBitmap" type="bitmap" help="background bitmap"/>
+		<property name="gradientColor1" type="wxColour">178,178,178</property>
+		<property name="gradientColor2" type="wxColour">200,200,200</property>
+		<property name="gradientDirection" type="option">      
+			<option name="wxLEFT" 					help="Enable the left border"	/>
+			<option name="wxRIGHT" 					help="Enable the right border"/>
+			<option name="wxTOP" 						help="Enable the top border"/>
+			<option name="wxBOTTOM" 				help="Enable the bottom border"/>
+			wxTOP
+    </property>    
+		<property name="scroll_rate_x" type="uint" help="Set the horizontal scrolling increment.">5</property>
+		<property name="scroll_rate_y" type="uint" help="Set the vertical scrolling increment.">5</property>
+	</objectinfo>
+	  
+  <objectinfo class="wxBannerWindow" icon="wxinfobar.xpm" type="expanded_widget">
+		<inherits class="wxWindow" />		
+		<property name="name" type="text">m_wxBannerWindow</property>		
+		<property name="titleText" type="text">Title Text</property>		
+		<property name="messageText" type="text">Message Text</property>		
+		<property name="backgroundBitmap" type="bitmap" help="background bitmap"/>
+		<property name="gradientColor1" type="wxColour">75,75,75 </property>
+		<property name="gradientColor2" type="wxColour">175,175,175 </property>
+
+		<property name="direction" type="option">      
+    	<option name="wxLEFT" 					help="Enable the left border"	/>
+			<option name="wxRIGHT" 					help="Enable the right border"/>
+			<option name="wxTOP" 						help="Enable the top border"/>
+      <option name="wxBOTTOM" 				help="Enable the bottom border"/>
+      wxTOP
+    </property>		     
+  </objectinfo>
+  
+   <objectinfo class="wxBitmapToggleButton" icon="bitmaptoggle_button.xpm" type="widget">
+		<inherits class="wxButton">
+			<property name="name">m_bpButton</property>			
+		</inherits>
+		<property name="value" type="bool">0</property>		
+		<property name="style" type="bitlist">
+			<option name="wxBU_LEFT"      help="Left-justifies the bitmap label. WIN32 only."/>
+			<option name="wxBU_TOP"       help="Aligns the bitmap label to the top of the button. WIN32 only."/>
+			<option name="wxBU_RIGHT"     help="Right-justifies the bitmap label. WIN32 only."/>
+			<option name="wxBU_BOTTOM"    help="Aligns the bitmap label to the bottom of the button. WIN32 only."/>
+			<option name="wxBU_AUTODRAW"  help="If this is specified, the button will be drawn automatically using the label bitmap only, providing a 3D-look border. If this style is not specified, the button will be drawn without borders and using all provided bitmaps. (Windows Only)"/>
+			wxBU_AUTODRAW
+		</property>
+		<property name="bitmap" type="bitmap" help="This is the bitmap shown in the default state, it must be always valid while all the other bitmaps are optional and don't have to be set."/>
+		<property name="disabled" type="bitmap" help="Bitmap shown when the button is disabled."/>
+		<property name="selected" type="bitmap" help="Bitmap shown when the button is pushed (e.g. while the user keeps the mouse button pressed on it)."/>
+		<property name="focus" type="bitmap" help="Bitmap shown when the button has keyboard focus but is not pressed."/>
+		<property name="hover" type="bitmap" help="Bitmap shown when the mouse is over the button (but it is not pressed). Notice that if hover bitmap is not specified but the current platform UI uses hover images for the buttons (such as Windows XP or GTK+), then the focus bitmap is used for hover state as well. This makes it possible to set focus bitmap only to get reasonably good behaviour on all platforms."/>
+		<event name="OnToggleButton" class="wxCommandEvent" help="Process a wxEVT_COMMAND_RADIOBUTTON_SELECTED event, when the radiobutton is clicked." />
+  </objectinfo>
+  
+  <objectinfo class="G3SoundChannels" icon="soundchannels.xpm" type="widget">
+		<inherits class="wxPanel" />
+
+		<property name="name" type="text">m_soundChannels</property>
+		<property name="imageSize" type="wxSize" help="Item single image size">70,70</property>
+		<property name="itemSpace" type="wxSize" help="Space between items">1,1</property>
+		<property name="style" type="bitlist">      
+			<option name="G3_SCS_GRADIENTBACKGROUND" help="Draw gradient background"/>
+			<option name="G3_SCS_BITMAPBACKGROUND" help="Fill label background"/>			
+			<!--G3_SCS_GRADIENTBACKGROUND-->
+		</property>
+		<property name="labelColour" type="wxColour">255,255,255 </property>
+		<property name="selectedLabelColour" type="wxColour">255,255,255 </property>
+		<property name="selectedLabelBackgroundColor" type="wxColour">0,0,128 </property>
+		<property name="labelFont" type="wxFont">Courier 10 Pitch, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, 8</property>
+		<property name="labelBgColor1" type="wxColour">146,146,146 </property>
+		<property name="labelBgColor2" type="wxColour">75,75,75 </property>
+		<property name="bgColor1" type="wxColour">146,146,146 </property>
+		<property name="bgColor2" type="wxColour">75,75,75 </property>
+		<property name="selFrameColor" type="wxColour">0,255,0 </property>
+		<property name="selFrameWidth" type="uint">1</property>
+
+		<property name="viewMode" type="option">      
+			<option name="G3_SCVM_TILES" 	help="two columnt tiles with vertical scrollbar"/>
+			<option name="G3_SCVM_DETAILS" 	help="detail one column detail list"/>
+			G3_SCVM_TILES
+		</property>
+
+
+		<event name="OnItemSelected" class="G3SoundChannelsEvent" help="todo" />
+		<event name="OnItemBeginDragged" class="G3SoundChannelsEvent" help="todo" />
+		<event name="OnItemEndDragged" class="G3SoundChannelsEvent" help="todo" />
+		<event name="OnItemRClick" class="G3SoundChannelsEvent" help="todo" />
+		<event name="OnItemMoreClick" class="G3SoundChannelsEvent" help="todo" />
+  </objectinfo>
+  
+  <objectinfo class="wxWebView" icon="webview.xpm" type="widget">
+	<inherits class="wxWindow" />
+	
+	<property name="name" type="text">m_webView</property>
+	<property name="backend" type="text" help="nazwa backendu, domyslnie wxWebViewBackendIE">wxWebViewBackendIE</property>	
+	<property name="backendFactory" type="text" help="nazwa backendu, domyslnie wxWebViewFactoryIE">wxWebViewFactoryIE</property>	
+	
+	<property name="url" type="wxString_i18n"></property>		
+	<property name="isEditable" type="bool">1</property>
+	<property name="isEnableContextMenu" type="bool">1</property>
+	
+	<event name="OnWebViewNavigating" class="wxWebViewEvent" help="todo" />
+	<event name="OnWebViewNavigated" class="wxWebViewEvent" help="todo" />
+	<event name="OnWebViewLoaded" class="wxWebViewEvent" help="todo" />
+	<event name="OnWebViewError" class="wxWebViewEvent" help="todo" />
+	<event name="OnWebViewNewWindow" class="wxWebViewEvent" help="todo" />
+	<event name="OnWebViewTitleChanged" class="wxWebViewEvent" help="todo" />
+  </objectinfo>
+  
+</package>
