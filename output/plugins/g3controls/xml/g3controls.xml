@@ -52,33 +52,33 @@
 		<event name="OnChangeValue" class="G3ColorPickerPanelEvent" help="Process a EVT_G3_COLORPICKER_CHANGE_VALUE event, when color changed" />	    
   </objectinfo>
   
-  <!-- <objectinfo class="G3CollapsiblePanels" icon="collapseiblepane.xpm" type="g3collpanels"> -->
-		<!-- <inherits class="Common Events" /> -->
-		<!-- <inherits class="wxWindow"> -->
-		<!-- <property name="window_style">wxTAB_TRAVERSAL</property> -->
-		<!-- </inherits> -->
-		<!-- <inherits class="AUI" /> -->
-		<!-- <property name="name" type="text">m_collapsiblePanel</property> -->
-		<!-- <property name="styleskin" type="option"> -->
-			<!-- <option name="G3_CP_DEFAULT" help="standard wxtogglebutton"/> -->
-			<!-- <option name="G3_CP_SIMPLE_BACKGROUND" help="toggle button filled one color"/> -->
-			<!-- <option name="G3_CP_GRADIENTBACKGROUND" help="toggle button with gradient background color"/> -->
-			<!-- G3_CP_GRADIENTBACKGROUND -->
-    <!-- </property>      -->
-		<!-- <property name="labelColour" type="wxColour">0,0,0 </property>				 -->
-		<!-- <property name="labelFont" type="wxFont">Courier 10 Pitch, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, 8</property> -->
-		<!-- <property name="frameColour" type="wxColour">0,0,0 </property>		 -->
-		<!-- <property name="bgColor1" type="wxColour">222,222,222 </property> -->
-		<!-- <property name="bgColor2" type="wxColour">190,190,190 </property> -->
-		<!-- <property name="bgGradientColor1" type="wxColour">200,200,200 </property> -->
-    <!-- <property name="bgGradientColor2" type="wxColour">150,150,150 </property>		 -->
-	<!-- </objectinfo> -->
+  <objectinfo class="G3CollapsiblePanels" icon="collapseiblepane.xpm" type="g3collpanels">
+		<inherits class="Common Events" />
+		<inherits class="wxWindow">
+		<property name="window_style">wxTAB_TRAVERSAL</property>
+		</inherits>
+		<inherits class="AUI" />
+		<property name="name" type="text">m_collapsiblePanel</property>
+		<property name="styleskin" type="option">
+			<option name="G3_CP_DEFAULT" help="standard wxtogglebutton"/>
+			<option name="G3_CP_SIMPLE_BACKGROUND" help="toggle button filled one color"/>
+			<option name="G3_CP_GRADIENTBACKGROUND" help="toggle button with gradient background color"/>
+			G3_CP_GRADIENTBACKGROUND
+    </property>     
+		<property name="labelColour" type="wxColour">0,0,0 </property>				
+		<property name="labelFont" type="wxFont">Courier 10 Pitch, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, 8</property>
+		<property name="frameColour" type="wxColour">0,0,0 </property>		
+		<property name="bgColor1" type="wxColour">222,222,222 </property>
+		<property name="bgColor2" type="wxColour">190,190,190 </property>
+		<property name="bgGradientColor1" type="wxColour">200,200,200 </property>
+    <property name="bgGradientColor2" type="wxColour">150,150,150 </property>		
+	</objectinfo>
 	
 	<!--class TYLKO mala litera !!! wtf ?-->
-	<!-- <objectinfo class="g3collpage" type="g3collpage" > -->
-		<!-- <property name="label" type="wxString_i18n">a page</property> -->
-		<!-- <property name="closed" type="bool" help="Closed panel ?">0</property> -->
-	<!-- </objectinfo> -->
+	<objectinfo class="g3collpage" type="g3collpage" >
+		<property name="label" type="wxString_i18n">a page</property>
+		<property name="closed" type="bool" help="Closed panel ?">0</property>
+	</objectinfo>
 
 
 	<objectinfo class="G3PropertyGrid" icon="propgrid.xpm" type="expanded_widget">

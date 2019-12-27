@@ -77,6 +77,8 @@
     <childtype name="dataviewlistctrl" nmax="0"/>
     <childtype name="propgrid" nmax="0"/>
     <childtype name="propgridman" nmax="0"/>
+	<childtype name="g3collpanels" nmax="0" />
+    <childtype name="g3rollmenu" nmax="0" />
   </objtype>
 
   <objtype name="wizard">
@@ -116,6 +118,37 @@
     <childtype name="gbsizeritem"/>
   </objtype>
 
+  <objtype name="g3collpanels" >
+	<childtype name="g3collpage" nmax="5" aui_nmax="5" />
+  </objtype>
+
+  <objtype name="g3collpage" item="1">
+	<childtype name="container" nmax="1" aui_nmax="1" />
+  </objtype>
+  
+  <objtype name="g3rollmenu">
+	<childtype name="g3rollgroup"/>
+	<childtype name="g3rollpanel"/>
+	<childtype name="g3rollbutton"/>
+	<childtype name="g3collpage"/>		
+  </objtype>
+
+  <objtype name="g3rollgroup">
+	<childtype name="g3rollpanel"/>
+	<childtype name="g3rollbutton"/>
+	<childtype name="g3collpage"/>	
+  </objtype>
+
+  <objtype name="g3rollpanel" item="1">
+	<childtype name="container" nmax="1" aui_nmax="1" />
+	<!--<childtype name="sizer" nmax="1" aui_nmax="1" />-->
+  </objtype>
+
+  <objtype name="g3rollbutton"/>
+  <objtype name="gbsizer">
+    <childtype name="gbsizeritem"/>
+  </objtype>
+  
   <objtype name="container">
     <childtype name="sizer" nmax="1" aui_nmax="1"/>
     <childtype name="gbsizer" nmax="1" aui_nmax="1"/>
